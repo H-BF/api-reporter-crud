@@ -1,0 +1,25 @@
+reporter:
+  image:
+    pullPolicy: Never
+    repository: api-reporter-crud
+    tag: latest
+  logLevel: DEBUG
+  logType: pretty
+  ports:
+    addressPort: 9001
+    addressPortAlias: api-reporter
+  postgres:
+    host: 172.25.143.81
+    port: 5432
+    name: postgres
+    user: nkiver
+    pwd: nkiver
+    schema: api_report
+  restartPolicy: OnFailure
+
+service:
+  port: 9001
+  type: LoadBalancer
+
+defaults:
+  securityContext: {}

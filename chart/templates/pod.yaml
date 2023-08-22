@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-api-reporter-crud
+  namespace: {{ .Release.Namespace }}
+  labels:
+    component: {{ .Release.Name }}-api-reporter-crud
+spec:
+  {{- with .Values.reporter }}
+  containers:
+  - name: api-reporter-crud
+    image: {{ .image.repository }}:{{ .image.tag }}
+    imagePullPolicy: {{ .image.pullPolicy }}
+    {{- with .securityContext | default $.Values.defaults.securityContext }}
+    securityContext:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
+    ports: 
+    - containerPort: {{ .ports.addressPort }}
+      name: {{ .ports.addressPortAlias }}
+    env:
+    - name: DATABASE_URL
+      value: postgresql://{{ .postgres.user }}:{{ .postgres.pwd }}@{{ .postgres.host }}:{{ .postgres.port }}/{{ .postgres.name }}?schema={{ .postgres.schema }}
+    - name: APP_PORT
+      value: "{{ .ports.addressPort | toString }}"
+    - name: LOG_LVL
+      value: "{{ .logLevel }}"
+    - name: LOG_TYPE
+      value: "{{ .logType }}"
+  restartPolicy: {{ .restartPolicy }}
+  {{- end }}
