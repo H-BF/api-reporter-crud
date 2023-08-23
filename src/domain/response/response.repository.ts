@@ -12,8 +12,8 @@ export class ResponseRepository implements IResponseRepository {
             data: {
                 status: response.status,
                 code: response.code,
-                header: response.header,
-                body: response.body
+                header: JSON.parse(response.header),
+                body: JSON.parse(response.body)
                 
             }
         })

@@ -12,8 +12,8 @@ export class RequestRepository implements IRequestRepository {
             data: {
                 method: request.method,
                 url: request.url,
-                header: request.header,
-                body: request.body
+                header: JSON.parse(request.header),
+                body: JSON.parse(request.body)
             }
         })
     }
