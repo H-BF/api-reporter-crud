@@ -1,15 +1,14 @@
 import { App } from "./app/app";
 import { logger } from "./common/logger/logger.service";
+import { variables } from "./common/var_storage/variables-storage";
 import { MissEnvVariable } from "./errors/custom/miss-env-variable";
 
 (async () => {
-    if (!process.env.APP_PORT)
-        throw new MissEnvVariable("APP_PORT")
-
     const app = await (new App()).start()
+    const port = variables.get("APP_PORT")
 
-    app.listen(process.env.APP_PORT, () => {
-        logger.info(`✅ Server started successfully on port: ${process.env.APP_PORT}!`)
+    app.listen(port, () => {
+        logger.info(`✅ Server started successfully on port: ${port}!`)
     })
 })().catch(err => {
     logger.err(err)
