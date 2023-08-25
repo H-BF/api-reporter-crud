@@ -15,10 +15,11 @@ CREATE TABLE "launch" (
     "job" INTEGER NOT NULL,
     "src_branch" TEXT NOT NULL,
     "dst_branch" TEXT NOT NULL,
+    "commit" TEXT NOT NULL,
     "fail_count" INTEGER,
     "pass_count" INTEGER,
     "duration" INTEGER,
-    "image" TEXT NOT NULL,
+    "hbf_tag" TEXT NOT NULL,
     "status" "launch_status" NOT NULL DEFAULT 'create',
 
     CONSTRAINT "launch_pkey" PRIMARY KEY ("uuid")

@@ -1,5 +1,6 @@
 import bodyParser from "body-parser"
 import express, { Application } from "express"
+import swaggerUi, { JsonObject } from 'swagger-ui-express';
 import { PrismaService } from "../database/prisma.service"
 import { ExceptionFilter } from "../errors/exception.filter"
 import { LaunchRepository } from "../domain/launch/launch.repository"
@@ -20,6 +21,8 @@ import { ExecutionsController } from "../domain/executions/executions.controller
 import { AssertionsRepository } from "../domain/assertions/assertions.repository"
 import { AssertionsService } from "../domain/assertions/assertions.service"
 import { AssertionsController } from "../domain/assertions/assertions.controller"
+import { swaggerTemplate } from '../swagger.template'
+import { variables } from "../common/var_storage/variables-storage";
 
 export class App {
 
@@ -31,7 +34,7 @@ export class App {
     }
 
     async start(): Promise<Application> {
-        
+
         const client = new PrismaService()
         await client.connect()
 
@@ -59,9 +62,17 @@ export class App {
         this.app.use('/v1', new ExecutionsController(execSvc).router)
         this.app.use('/v1', new AssertionsController(assertionSvc).router)
 
+        //Биндим обработчик ошибок
         const exf = new ExceptionFilter()
         this.app.use(exf.catch.bind(exf))
-        
+
+        if(variables.get("STAGE") === "dev") {
+            this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerTemplate({
+                host: variables.get("INGRESS_NAME"),
+                port: variables.get("APP_PORT")
+            }) as unknown as JsonObject))
+        }
+
         return this.app
     }
 }

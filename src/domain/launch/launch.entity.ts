@@ -5,10 +5,11 @@ export interface ILaunch {
     job?: string
     srcBranch?: string
     dstBranch?: string
+    commit?: string
     failCount?: number
     passCount?: number
     duration?: number
-    image?: string
+    hbfTag?: string
     status?: LaunchStatus
 }
 
@@ -18,10 +19,11 @@ export class Launch {
     private _job?: string
     private _srcBranch?: string
     private _dstBranch?: string
+    private _commit?: string | undefined
     private _failCount?: number
     private _passCount?: number
     private _duration?: number
-    private _image?: string
+    private _hbfTag?: string
     private _status?: LaunchStatus
 
     constructor(data: ILaunch) {
@@ -29,10 +31,11 @@ export class Launch {
         this._job = data.job
         this._srcBranch = data.srcBranch
         this._dstBranch = data.dstBranch
+        this._commit = data.commit
         this._failCount = data.failCount
         this._passCount = data.passCount
         this._duration = data.duration
-        this._image = data.image
+        this._hbfTag = data.hbfTag
         this._status = data.status
     }
 
@@ -68,6 +71,14 @@ export class Launch {
         this._dstBranch = dstBranch
     }
 
+    public get commit(): string | undefined {
+        return this._commit
+    }
+    
+    public set commit(value: string | undefined) {
+        this._commit = value
+    }
+
     public get failCount(): number | undefined {
         return this._failCount
     }
@@ -92,16 +103,16 @@ export class Launch {
         this._duration = value
     }
 
-    
-    public get image(): string | undefined {
-        return this._image
+
+    public get hbfTag(): string | undefined {
+        return this._hbfTag
     }
 
-    public set image(image: string) {
-        this._image = image
+    public set hbfTag(image: string) {
+        this._hbfTag = image
     }
 
-    
+
     public get status(): LaunchStatus | undefined {
         return this._status
     }

@@ -48,7 +48,7 @@ export class LaunchErrorController extends BaseController {
 
     @tryCatch("не удалось получить данные по launch error")
     async getByLaunchUuid(req: Request, res: Response, next: NextFunction) {
-        const uuid = req.query['uuid']!!.toString()
+        const uuid = req.query['launchUuid']!!.toString()
         const launchError = await this.launchErrorService.getByLaunchUUID(uuid)
         res.status(200).send(launchError)
     }

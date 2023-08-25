@@ -21,5 +21,8 @@ service:
   port: 9001
   type: LoadBalancer
 
+stage: dev
+ingressName: 172.25.143.81
+
 defaults:
   securityContext: {}
