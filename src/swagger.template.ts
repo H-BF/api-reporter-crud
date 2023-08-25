@@ -10,7 +10,7 @@ export const swaggerTemplate = parse({
   },
   "servers": [
     {
-      "url": "http://{{host}}:{{port}}/v1"
+      "url": "http://{{host}}:{{port}}/api/v1"
     }
   ],
   "paths": {
