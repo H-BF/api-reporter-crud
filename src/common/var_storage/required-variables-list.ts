@@ -3,5 +3,6 @@ export const requiredVariablesList = [
     "LOG_LVL",
     "LOG_TYPE",
     "STAGE",
-    "INGRESS_NAME"
+    "INGRESS_NAME",
+    "INGRESS_PORT"
 ]

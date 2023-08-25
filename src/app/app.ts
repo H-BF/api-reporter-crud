@@ -55,12 +55,12 @@ export class App {
         const assertionSvc = new AssertionsService(assertionRepo)
 
         //Инициализируем и привязываем контроллеры
-        this.app.use('/v1', new LaunchController(launchSvc).router)
-        this.app.use('/v1', new LaunchErrorController(launchErrSvc).router)
-        this.app.use('/v1', new RequestController(reqSvc).router)
-        this.app.use('/v1', new ResponseController(resSvc).router)
-        this.app.use('/v1', new ExecutionsController(execSvc).router)
-        this.app.use('/v1', new AssertionsController(assertionSvc).router)
+        this.app.use('/api/v1', new LaunchController(launchSvc).router)
+        this.app.use('/api/v1', new LaunchErrorController(launchErrSvc).router)
+        this.app.use('/api/v1', new RequestController(reqSvc).router)
+        this.app.use('/api/v1', new ResponseController(resSvc).router)
+        this.app.use('/api/v1', new ExecutionsController(execSvc).router)
+        this.app.use('/api/v1', new AssertionsController(assertionSvc).router)
 
         //Биндим обработчик ошибок
         const exf = new ExceptionFilter()
@@ -69,7 +69,7 @@ export class App {
         if(variables.get("STAGE") === "dev") {
             this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerTemplate({
                 host: variables.get("INGRESS_NAME"),
-                port: variables.get("APP_PORT")
+                port: variables.get("INGRESS_PORT")
             }) as unknown as JsonObject))
         }
 
