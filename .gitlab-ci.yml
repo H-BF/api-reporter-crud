@@ -1,7 +1,7 @@
 # https://gitlab.wildberries.ru/devops/ci/templates/-/blob/master/README.md
 .template_repo: &repo
   project: &ci_tmpl 'devops/ci/templates'
-  ref: &ci_tmpl_vers 'v3.7.0'
+  ref: &ci_tmpl_vers 'v3.6.1'
 
 variables:
   # Mandatory vars. Do not change this
@@ -31,5 +31,7 @@ stages:
   - build
 
 generate build:
+  tags:
+    - 
   variables:
     CI_TMPL_HELM_RELEASE_NAMES: "api-reporter-crud"
