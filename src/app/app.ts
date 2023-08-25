@@ -67,7 +67,7 @@ export class App {
         this.app.use(exf.catch.bind(exf))
 
         if(variables.get("STAGE") === "dev") {
-            this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerTemplate({
+            this.app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerTemplate({
                 host: variables.get("INGRESS_NAME"),
                 port: variables.get("INGRESS_PORT")
             }) as unknown as JsonObject))
