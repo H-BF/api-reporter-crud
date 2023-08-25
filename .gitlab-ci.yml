@@ -31,7 +31,5 @@ stages:
   - build
 
 generate build:
-  tags:
-    - 
   variables:
     CI_TMPL_HELM_RELEASE_NAMES: "api-reporter-crud"
