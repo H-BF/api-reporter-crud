@@ -1,5 +1,7 @@
 export const requiredVariablesList = [
     "APP_PORT",
     "LOG_LVL",
-    "LOG_TYPE"
+    "LOG_TYPE",
+    "STAGE",
+    "INGRESS_NAME"
 ]

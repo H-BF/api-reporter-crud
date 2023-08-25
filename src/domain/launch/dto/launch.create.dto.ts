@@ -12,8 +12,11 @@ export class LaunchCreateDto {
     srcBranch!: string
 
     @IsString()
-    dstBranch!: string 
+    dstBranch!: string
 
     @IsString()
-    image!: string
+    commit!: string
+
+    @IsString()
+    hbfTag!: string
 }

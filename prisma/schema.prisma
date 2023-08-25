@@ -10,14 +10,15 @@ datasource db {
 model Launch {
     uuid        String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
     date        DateTime     @default(now())
-    pipeline     Int
+    pipeline    Int
     job         Int
     src_branch  String
     dst_branch  String
+    commit      String
     fail_count  Int?
     pass_count  Int?
     duration    Int?
-    image       String
+    hbf_tag     String
     status      LaunchStatus @default(create)
     LaunchError LaunchError?
     Executions  Executions[]

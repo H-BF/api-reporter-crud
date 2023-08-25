@@ -27,5 +27,9 @@ spec:
       value: "{{ .logLevel }}"
     - name: LOG_TYPE
       value: "{{ .logType }}"
+    - name: STAGE
+      value: {{ $.Values.stage }}
+    - name: INGRESS_NAME
+      value: {{ $.Values.ingressName }}
   restartPolicy: {{ .restartPolicy }}
   {{- end }}
