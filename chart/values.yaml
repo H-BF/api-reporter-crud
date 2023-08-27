@@ -23,6 +23,7 @@ service:
 
 stage: dev
 ingressName: 172.25.143.81
+ingressPort: 9001
 
 defaults:
   securityContext: {}
