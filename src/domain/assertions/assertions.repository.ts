@@ -12,6 +12,7 @@ export class AssertionsRepository implements IAssertionsRepository {
             data: {
                name: assertions.name,
                execution_uuid: assertions.executionUuid,
+               json_schema: assertions.jsonSchema,
                error_message: assertions.errorMessage,
                status: assertions.status 
             }
@@ -25,8 +26,9 @@ export class AssertionsRepository implements IAssertionsRepository {
             data.push({
                 name: assertion.name,
                 execution_uuid: assertion.executionUuid,
+                json_schema: assertion.jsonSchema,
                 error_message: assertion.errorMessage,
-                status: assertion.status 
+                status: assertion.status
             });
         })
 

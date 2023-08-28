@@ -13,6 +13,10 @@ export class AssertionsCreateDto {
     @IsOptional()
     errorMessage?: string
 
+    @IsUUID()
+    @IsOptional()
+    jsonSchema?: string
+
     @IsIn(Object.keys(TestStatus))
     status!: TestStatus
 }

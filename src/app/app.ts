@@ -23,6 +23,9 @@ import { AssertionsService } from "../domain/assertions/assertions.service"
 import { AssertionsController } from "../domain/assertions/assertions.controller"
 import { swaggerTemplate } from '../swagger.template'
 import { variables } from "../common/var_storage/variables-storage";
+import { JsonSchemaRepository } from "../domain/json_schema/json-schema.repository";
+import { JsonSchemaService } from "../domain/json_schema/json-schema.service";
+import { JsonSchemaController } from "../domain/json_schema/json-schema.controller";
 
 export class App {
 
@@ -45,6 +48,7 @@ export class App {
         const resRepo = new ResponseRepository(client)
         const execRepo = new ExecutionsRepository(client)
         const assertionRepo = new AssertionsRepository(client)
+        const jsonSchemaRepo = new JsonSchemaRepository(client)
 
         //Инициализируем сервисы
         const launchSvc = new LaunchService(launchRepo)
@@ -53,6 +57,7 @@ export class App {
         const resSvc = new ResponseService(resRepo)
         const execSvc = new ExecutionsService(execRepo)
         const assertionSvc = new AssertionsService(assertionRepo)
+        const jsonSchemaSvc = new JsonSchemaService(jsonSchemaRepo)
 
         //Инициализируем и привязываем контроллеры
         this.app.use('/api/v1', new LaunchController(launchSvc).router)
@@ -61,11 +66,13 @@ export class App {
         this.app.use('/api/v1', new ResponseController(resSvc).router)
         this.app.use('/api/v1', new ExecutionsController(execSvc).router)
         this.app.use('/api/v1', new AssertionsController(assertionSvc).router)
+        this.app.use('/api/v1', new JsonSchemaController(jsonSchemaSvc).router)
 
         //Биндим обработчик ошибок
         const exf = new ExceptionFilter()
         this.app.use(exf.catch.bind(exf))
 
+        //Добавлям для DEV стейджа отображение swagger-документации
         if(variables.get("STAGE") === "dev") {
             this.app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerTemplate({
                 host: variables.get("INGRESS_NAME"),

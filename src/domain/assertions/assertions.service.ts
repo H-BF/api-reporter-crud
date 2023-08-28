@@ -12,6 +12,7 @@ export class AssertionsService implements IAssertionsService {
         const assertion = new Assertions(
             dto.name,
             dto.executionUuid,
+            dto.jsonSchema || null,
             dto.errorMessage || null,
             dto.status
         )
@@ -25,6 +26,7 @@ export class AssertionsService implements IAssertionsService {
             data = data.concat(new Assertions(
                 d.name,
                 d.executionUuid,
+                d.jsonSchema || null,
                 d.errorMessage || null,
                 d.status
             ))
