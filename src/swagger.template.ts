@@ -502,7 +502,100 @@ export const swaggerTemplate = parse({
           }
         }
       }
-    }
+    },
+    "/json_schema": {
+      "get": {
+        "summary": "Получение данных из json_schema по uuid",
+        "parameters": [{
+          "in": "query",
+          "name": "uuid",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+      }],
+      "responses": {
+        "200": {
+          "description": "Данные успешно получены",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/jsonSchema"
+              }
+            }
+          }          
+        },
+        "400": {
+          "description": "Не корректный запрос",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/error"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Серверная ошибка",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/error"
+              }
+            }
+          }
+        }        
+      }
+      }
+    },
+    "/json_schemas": {
+      "get": {
+        "summary": "Получение всех записей из json_schema для указанного launchUuid",
+        "parameters": [{
+          "in": "query",
+          "name":"launchUuid",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Данные успешно получены",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/jsonSchema"
+                  }
+                }
+              }
+            }            
+          },
+          "400": {
+            "description": "Не корректный запрос",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Серверная ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }          
+        }
+      }
+    },
   },
   "components": {
     "schemas": {
@@ -558,6 +651,9 @@ export const swaggerTemplate = parse({
           },
           "execution_uuid": {
             "type": "string"
+          },
+          "json_schema": {
+            "type": "object"
           },
           "error_message": {
             "type": "string",
@@ -650,6 +746,23 @@ export const swaggerTemplate = parse({
           },
           "messgae": {
             "type": "string"
+          }
+        }
+      },
+      "jsonSchema": {
+        "type": "object",
+        "properties": {
+          "uuid": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "launch_uuid": {
+            "type": "string"
+          },
+          "json_schema": {
+            "type": "object"
           }
         }
       },

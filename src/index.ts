@@ -1,7 +1,6 @@
 import { App } from "./app/app";
 import { logger } from "./common/logger/logger.service";
 import { variables } from "./common/var_storage/variables-storage";
-import { MissEnvVariable } from "./errors/custom/miss-env-variable";
 
 (async () => {
     const app = await (new App()).start()

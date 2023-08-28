@@ -22,6 +22,7 @@ model Launch {
     status      LaunchStatus @default(create)
     LaunchError LaunchError?
     Executions  Executions[]
+    JsonSchema  JsonSchema[]
 
     @@unique([pipeline, job])
     @@map(name: "launch")
@@ -76,11 +77,24 @@ model Assertions {
     uuid           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
     name           String
     execution_uuid String     @db.Uuid
+    json_schema    String?    @db.Uuid
     error_message  String?
     status         TestStatus
     execution      Executions @relation(fields: [execution_uuid], references: [uuid])
+    schema         JsonSchema? @relation(fields: [json_schema], references: [uuid])
 
     @@map(name: "assertions")
+}
+
+model JsonSchema {
+    uuid        String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    name        String
+    launch_uuid String       @db.Uuid
+    json_schema Json
+    launch      Launch       @relation(fields: [launch_uuid], references: [uuid])
+    Assertions  Assertions[]
+
+    @@map(name: "json_schema")
 }
 
 enum LaunchStatus {

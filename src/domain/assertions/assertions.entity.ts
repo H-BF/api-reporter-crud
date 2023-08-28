@@ -5,6 +5,7 @@ export class Assertions {
     constructor(
         private _name: string,
         private _executionUuid: string,
+        private _jsonSchema: string | null = null,
         private _errorMessage: string | null = null,
         private _status: TestStatus
     ) {}
@@ -23,6 +24,14 @@ export class Assertions {
 
     public set executionUuid(value: string) {
         this._executionUuid = value;
+    }
+
+    public get jsonSchema(): string | null {
+        return this._jsonSchema;
+    }
+
+    public set jsonSchema(value: string | null) {
+        this._jsonSchema = value;
     }
 
     public get errorMessage(): string | null {
