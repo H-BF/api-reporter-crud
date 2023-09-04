@@ -685,6 +685,12 @@ export const swaggerTemplate = parse({
           },
           "response_uuid": {
             "type": "string"
+          },
+          "fail_count": {
+            "type": "number"
+          },
+          "pass_count": {
+            "type": "number"
           }
         }
       },

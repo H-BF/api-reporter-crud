@@ -3,6 +3,7 @@ import { Executions } from "../executions.entity";
 
 export interface IExecutionsRepository {
     create(execution: Executions): Promise<PExecutions>
+    update(uuid: string, execution: Executions): Promise<PExecutions>
     getOneByUuid(uuid: string): Promise<PExecutions | null>
     getAllByLaunchUuid(uuid: string): Promise<PExecutions[] | null>
 }

@@ -63,6 +63,8 @@ CREATE TABLE "executions" (
     "launch_uuid" UUID NOT NULL,
     "request_uuid" UUID NOT NULL,
     "response_uuid" UUID NOT NULL,
+    "fail_count" INTEGER,
+    "pass_count" INTEGER,
 
     CONSTRAINT "executions_pkey" PRIMARY KEY ("uuid")
 );
@@ -72,10 +74,21 @@ CREATE TABLE "assertions" (
     "uuid" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" TEXT NOT NULL,
     "execution_uuid" UUID NOT NULL,
+    "json_schema" UUID,
     "error_message" TEXT,
     "status" "test_status" NOT NULL,
 
     CONSTRAINT "assertions_pkey" PRIMARY KEY ("uuid")
+);
+
+-- CreateTable
+CREATE TABLE "json_schema" (
+    "uuid" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "name" TEXT NOT NULL,
+    "launch_uuid" UUID NOT NULL,
+    "json_schema" JSONB NOT NULL,
+
+    CONSTRAINT "json_schema_pkey" PRIMARY KEY ("uuid")
 );
 
 -- CreateIndex
@@ -104,3 +117,9 @@ ALTER TABLE "executions" ADD CONSTRAINT "executions_response_uuid_fkey" FOREIGN 
 
 -- AddForeignKey
 ALTER TABLE "assertions" ADD CONSTRAINT "assertions_execution_uuid_fkey" FOREIGN KEY ("execution_uuid") REFERENCES "executions"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "assertions" ADD CONSTRAINT "assertions_json_schema_fkey" FOREIGN KEY ("json_schema") REFERENCES "json_schema"("uuid") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "json_schema" ADD CONSTRAINT "json_schema_launch_uuid_fkey" FOREIGN KEY ("launch_uuid") REFERENCES "launch"("uuid") ON DELETE RESTRICT ON UPDATE CASCADE;

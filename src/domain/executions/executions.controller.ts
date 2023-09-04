@@ -8,6 +8,7 @@ import { ExecutionsCreateDto } from "./dto/executions.create.dto";
 import { ExecutionsFindAllByLaunchUuidDto } from "./dto/executions.find-all-by-launch-uuid.dto";
 import { ExecutionsFindDto } from "./dto/executions.find.dto";
 import { ExecutionsService } from "./executions.service";
+import { ExecutionUpdateDto } from "./dto/executions.update.dto";
 
 export class ExecutionsController extends BaseController {
 
@@ -21,6 +22,12 @@ export class ExecutionsController extends BaseController {
                 method: 'post',
                 func: this.create,
                 middlewares: [controllerMethodLogger, new PostValidateMiddleware(ExecutionsCreateDto)]
+            },
+            {
+                path: '/execution',
+                method: 'patch',
+                func: this.update,
+                middlewares: [controllerMethodLogger, new PostValidateMiddleware(ExecutionUpdateDto)]
             },
             {
                 path: '/execution',
@@ -41,6 +48,12 @@ export class ExecutionsController extends BaseController {
     async create(req: Request, res: Response, next: NextFunction) {
         const uuid = await this.executionsService.create(req.body)
         res.status(201).send({ "uuid": uuid })
+    }
+
+    @tryCatch("не удалось обновить Execution")
+    async update(req: Request, res: Response, next: NextFunction) {
+        const execution = await this.executionsService.update(req.body)
+        res.status(200).send(execution)
     }
 
     @tryCatch("не удалось получить данные по Execution")
