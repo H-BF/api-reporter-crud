@@ -1,18 +1,26 @@
 import { IsNumber, IsOptional, IsString, IsUUID } from "class-validator"
 
-export class ExecutionsCreateDto {
 
+export class ExecutionUpdateDto {
+
+    @IsUUID()
+    uuid!: string
+
+    @IsOptional()
     @IsString()
-    name!: string
+    name?: string
 
+    @IsOptional()
     @IsUUID()
-    launchUuid!: string
+    launchUuid?: string
 
+    @IsOptional()
     @IsUUID()
-    requestUuid!: string
+    requestUuid?: string
 
+    @IsOptional()
     @IsUUID()
-    responseUuid!: string
+    responseUuid?: string
 
     @IsOptional()
     @IsNumber()
