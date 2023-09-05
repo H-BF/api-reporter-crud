@@ -267,6 +267,22 @@ export const swaggerTemplate = parse({
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
           }
         ],
         "responses": {
@@ -275,9 +291,18 @@ export const swaggerTemplate = parse({
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/execution"
+                  "type": "object",
+                  "properties": {
+                    "totalRows": {
+                      "type": "number",
+                      "description": "Общее количество строк в таблице executions для заданного launchUuid"
+                    },
+                    "executions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/execution"
+                      }
+                    }
                   }
                 }
               }
@@ -454,6 +479,22 @@ export const swaggerTemplate = parse({
           },
           {
             "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
             "name": "status",
             "required": false,
             "schema": {
@@ -472,15 +513,24 @@ export const swaggerTemplate = parse({
             "content": {
               "application/json": {
                 "schema": {
-                  "type":"array",
-                  "items": {
-                    "$ref":"#/components/schemas/launch"
+                  "type": "object",
+                  "properties": {
+                    "totalRows": {
+                      "type": "number",
+                      "description": "Общее количество строк в таблице launchs. Остальные введенные параметры на это число не влияют"
+                    },
+                    "launchs": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/launch"
+                      }
+                    }
                   }
                 }
               }
             }
           },
-                    "400": {
+          "400": {
             "description": "Не корректный запрос",
             "content": {
               "application/json": {
@@ -513,51 +563,6 @@ export const swaggerTemplate = parse({
           "schema": {
             "type": "string"
           }
-      }],
-      "responses": {
-        "200": {
-          "description": "Данные успешно получены",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/jsonSchema"
-              }
-            }
-          }          
-        },
-        "400": {
-          "description": "Не корректный запрос",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/error"
-              }
-            }
-          }
-        },
-        "500": {
-          "description": "Серверная ошибка",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/error"
-              }
-            }
-          }
-        }        
-      }
-      }
-    },
-    "/json_schemas": {
-      "get": {
-        "summary": "Получение всех записей из json_schema для указанного launchUuid",
-        "parameters": [{
-          "in": "query",
-          "name":"launchUuid",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
         }],
         "responses": {
           "200": {
@@ -565,13 +570,10 @@ export const swaggerTemplate = parse({
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/jsonSchema"
-                  }
+                  "$ref": "#/components/schemas/jsonSchema"
                 }
               }
-            }            
+            }
           },
           "400": {
             "description": "Не корректный запрос",
@@ -592,7 +594,55 @@ export const swaggerTemplate = parse({
                 }
               }
             }
-          }          
+          }
+        }
+      }
+    },
+    "/json_schemas": {
+      "get": {
+        "summary": "Получение всех записей из json_schema для указанного launchUuid",
+        "parameters": [{
+          "in": "query",
+          "name": "launchUuid",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Данные успешно получены",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/jsonSchema"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не корректный запрос",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Серверная ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
         }
       }
     },
