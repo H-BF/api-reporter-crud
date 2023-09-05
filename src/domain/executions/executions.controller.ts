@@ -65,8 +65,8 @@ export class ExecutionsController extends BaseController {
 
     @tryCatch("не удалось получить данные по всем Execution")
     async getAllByLaunchUuid(req: Request, res: Response, next: NextFunction) {
-        const launchUuid = req.query['launchUuid']!!.toString()
-        const executions = await this.executionsService.getAllByLaunchUuid(launchUuid)
+        const queryParam = req.query as unknown as ExecutionsFindAllByLaunchUuidDto
+        const executions = await this.executionsService.getAllByLaunchUuid(queryParam)
         res.status(200).send(executions)
     }
 }

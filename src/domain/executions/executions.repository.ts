@@ -32,8 +32,22 @@ export class ExecutionsRepository implements IExecutionsRepository {
         })
     }
 
-    async getAllByLaunchUuid(launchUuid: string): Promise<PExecutions[] | null> {
+    async getAllByLaunchUuid(
+        launchUuid: string,
+        offset?: number,
+        limit?: number
+    ): Promise<PExecutions[] | null> {
         return await this.prismaService.client.executions.findMany({
+            where: {
+                launch_uuid: launchUuid
+            },
+            skip: Number(offset) || undefined,
+            take: Number(limit) || undefined
+        })
+    }
+
+    async countAllRowsWhere(launchUuid: string): Promise<number> {
+        return this.prismaService.client.executions.count({
             where: {
                 launch_uuid: launchUuid
             }

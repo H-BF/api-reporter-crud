@@ -25,8 +25,14 @@ export class LaunchService implements ILaunchService {
         return await this.client.getByUuid(uuid)
     }
 
-    async getLaunchsWhere(dto: LaunchFindWhereDto): Promise<PLaunch[] | null> {
-        const launch = new Launch(dto)
-        return await this.client.getLaunchsWhere(launch)
+    async getLaunchsWhere(dto: LaunchFindWhereDto): Promise<{totalRows: number, launchs: PLaunch[] | []}> {
+        const { offset, limit, ...data } = dto
+        const launch = new Launch(data)
+        const totalRows = await this.client.countAllRows()
+        const launchs = await this.client.getLaunchsWhere(launch, offset, limit)
+        return {
+            totalRows: totalRows,
+            launchs: launchs || []
+        }
     }
 }

@@ -1,4 +1,5 @@
 import { ExecutionsCreateDto } from "./dto/executions.create.dto";
+import { ExecutionsFindAllByLaunchUuidDto } from "./dto/executions.find-all-by-launch-uuid.dto";
 import { ExecutionUpdateDto } from "./dto/executions.update.dto";
 import { Executions } from "./executions.entity";
 import { ExecutionsRepository } from "./executions.repository";
@@ -24,7 +25,12 @@ export class ExecutionsService implements IExecutionsService {
         return await this.client.getOneByUuid(uuid)
     }
     
-    async getAllByLaunchUuid(launchUuid: string): Promise<PExecutions[] | null> {
-        return await this.client.getAllByLaunchUuid(launchUuid)
+    async getAllByLaunchUuid(dto: ExecutionsFindAllByLaunchUuidDto): Promise<{totalRows: number, executions: PExecutions[] | []}> {
+        const totalRows = await this.client.countAllRowsWhere(dto.launchUuid)
+        const executions = await this.client.getAllByLaunchUuid(dto.launchUuid, dto.offset, dto.limit)
+        return {
+            totalRows: totalRows,
+            executions: executions || []
+        }
     }
 }
