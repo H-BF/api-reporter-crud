@@ -517,7 +517,7 @@ export const swaggerTemplate = parse({
                   "properties": {
                     "totalRows": {
                       "type": "number",
-                      "description": "Общее количество строк в таблице launchs. Остальные введенные параметры на это число не влияют"
+                      "description": "Общее количество строк в таблице launchs подходящих под заданные условия"
                     },
                     "launchs": {
                       "type": "array",

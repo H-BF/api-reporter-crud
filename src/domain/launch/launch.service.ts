@@ -28,7 +28,7 @@ export class LaunchService implements ILaunchService {
     async getLaunchsWhere(dto: LaunchFindWhereDto): Promise<{totalRows: number, launchs: PLaunch[] | []}> {
         const { offset, limit, ...data } = dto
         const launch = new Launch(data)
-        const totalRows = await this.client.countAllRows()
+        const totalRows = await this.client.countAllRowsWhere(launch)
         const launchs = await this.client.getLaunchsWhere(launch, offset, limit)
         return {
             totalRows: totalRows,

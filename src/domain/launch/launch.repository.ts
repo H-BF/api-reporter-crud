@@ -56,8 +56,11 @@ export class LaunchRepository implements ILaunchRepository {
         })
     }
 
-    async countAllRows(): Promise<number> {
-        return await this.prismaService.client.launch.count()
+    async countAllRowsWhere(launch: Launch): Promise<number> {
+        let where: any = this.transform(launch)
+        return await this.prismaService.client.launch.count({
+            where: where
+        })
     }
 
     private transform(launch: Launch): any {
