@@ -52,7 +52,11 @@ export class LaunchRepository implements ILaunchRepository {
         return await this.prismaService.client.launch.findMany({
             where: where,
             skip: Number(offset) || undefined,
-            take: Number(limit) || undefined
+            take: Number(limit) || undefined,
+            orderBy: [
+                { pipeline: 'desc' },
+                { job: 'desc' }
+            ]
         })
     }
 
