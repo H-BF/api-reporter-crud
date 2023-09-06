@@ -10,7 +10,7 @@ variables:
 
 
   CI_TMPL_HELM_CHARTS: "common-deploy@v4.2.0"
-  CI_TMPL_HELM_RELEASE_NAMESPACE: swarm
+  CI_TMPL_HELM_RELEASE_NAMESPACE: testops
 
   # Harbor project name
   REGISTRY_PROJECT: "swarm"
@@ -29,7 +29,16 @@ include:
 stages:
   - generate dynamic pipeline
   - build
+  - deploy
 
 generate build:
   variables:
     CI_TMPL_HELM_RELEASE_NAMES: "api-reporter-crud"
+
+generate deploy:
+  tags:
+    - swarm
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^feature-.*$/
+      variables:
+        CI_TMPL_HELM_RELEASE_NAMES: "api-crud"
