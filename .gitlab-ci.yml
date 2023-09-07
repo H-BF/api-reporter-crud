@@ -30,7 +30,6 @@ variables:
   # Change deploy jobs appearance in pipeline
   CI_TMPL_DEPLOY_GROUPING: per-service
 
-
 include:
   - <<: *repo
     file: /global.yml
@@ -42,8 +41,8 @@ include:
     file: /helm/deploy.yml
 
 stages:
-  - generate dynamic pipeline
   - checks
+  - generate dynamic pipeline
   - build
   - deploy
 
