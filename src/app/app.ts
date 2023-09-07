@@ -1,6 +1,5 @@
 import bodyParser from "body-parser"
-import cors from "cors"
-import express, { Application, Request, Response, NextFunction } from "express"
+import express, { Application } from "express"
 import swaggerUi, { JsonObject } from 'swagger-ui-express';
 import { PrismaService } from "../database/prisma.service"
 import { ExceptionFilter } from "../errors/exception.filter"
@@ -27,7 +26,8 @@ import { variables } from "../common/var_storage/variables-storage";
 import { JsonSchemaRepository } from "../domain/json_schema/json-schema.repository";
 import { JsonSchemaService } from "../domain/json_schema/json-schema.service";
 import { JsonSchemaController } from "../domain/json_schema/json-schema.controller";
-import { HTTPError } from "../errors/custom/http-error";
+import { CORSMiddleware } from "../common/middleware/cors.middleware";
+import { PathNotFoundMiddleware } from "../common/middleware/path.not.found.middleware";
 
 export class App {
 
@@ -64,7 +64,7 @@ export class App {
         const jsonSchemaSvc = new JsonSchemaService(jsonSchemaRepo)
 
         //Добавлям правила для CORS
-        this.app.use(cors({ origin: this.isTrustedAddress }))
+        this.app.use(new CORSMiddleware().execute)
 
         //Инициализируем и привязываем контроллеры
         this.app.use(this.path, new LaunchController(launchSvc).router)
@@ -84,28 +84,12 @@ export class App {
         }
 
         //Обработка несуществующих path
-        this.app.use(this.notFound)
+        this.app.use(new PathNotFoundMiddleware().execute)
 
         //Биндим обработчик ошибок
         const exf = new ExceptionFilter()
         this.app.use(exf.catch.bind(exf))
 
         return this.app
-    }
-
-    private isTrustedAddress(
-        origin: string | undefined,
-        cb: (err: Error | null, allow?: boolean) => void
-    ) {
-        const whitelist = variables.get("TRUSTED_ADDRESS").split(";")
-        if (whitelist.indexOf(origin!) !== -1 || !origin) {
-            cb(null, true)
-        } else {
-            cb(new HTTPError(403, `Host: ${origin} not allowed by CORS`));
-        }
-    }
-
-    private notFound(req: Request, res: Response, next: NextFunction) {
-        next(new HTTPError(404, `PATH: ${req.path} Not Found`))
     }
 }
