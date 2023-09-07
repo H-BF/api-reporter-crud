@@ -48,17 +48,12 @@ stages:
 
 
 generate build:
-  tags:
-    - swarm
   variables:
     CI_TMPL_HELM_RELEASE_NAMES: "api-reporter-crud"
 
 
 generate deploy:
-  tags:
-    - swarm
   rules:
-
     - if: $CI_COMMIT_BRANCH =~ /^dev$/
       variables:
         CI_TMPL_HELM_RELEASE_NAMES: "api-reporter-crud"
