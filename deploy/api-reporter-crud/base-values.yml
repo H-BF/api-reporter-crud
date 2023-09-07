@@ -10,7 +10,7 @@ image:
 vault:
   enabled: true
   env:
-    - services/swarm/dev/swarm-pgsql-cl1-dev/user_admin:
+    - services/testops/dev/swarm-pgsql-cl1-dev/user_admin:
         DB_PASSWORD: password
 
   entrypoint: "sh /app/entrypoint.sh"
