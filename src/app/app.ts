@@ -27,8 +27,7 @@ import { variables } from "../common/var_storage/variables-storage";
 import { JsonSchemaRepository } from "../domain/json_schema/json-schema.repository";
 import { JsonSchemaService } from "../domain/json_schema/json-schema.service";
 import { JsonSchemaController } from "../domain/json_schema/json-schema.controller";
-import { CORSError } from "../errors/custom/cors-error";
-import { NotFoundError } from "../errors/custom/not-found-error";
+import { HTTPError } from "../errors/custom/http-error";
 
 export class App {
 
@@ -102,11 +101,11 @@ export class App {
         if (whitelist.indexOf(origin!) !== -1 || !origin) {
             cb(null, true)
         } else {
-            cb(new CORSError(origin));
+            cb(new HTTPError(403, `Host: ${origin} not allowed by CORS`));
         }
     }
 
     private notFound(req: Request, res: Response, next: NextFunction) {
-        next(new NotFoundError())
+        next(new HTTPError(404, `PATH: ${req.path} Not Found`))
     }
 }
