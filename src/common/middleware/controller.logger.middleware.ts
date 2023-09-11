@@ -4,9 +4,9 @@ import { logger } from "../logger/logger.service";
 
 class ControllerMethodLogger implements IMiddleware {
     
-    async execute({ url, method, body, hostname, ip }: Request, res: Response, next: NextFunction): Promise<void> {
+    async execute({ url, method, body, headers }: Request, res: Response, next: NextFunction): Promise<void> {
 
-        let msg = `[${hostname}][${ip}][${method}] ${url} `     
+        let msg = `[${headers.host}][${headers.referer}][${method}] ${url} `     
         switch(method) {
             case 'GET':
                 break;

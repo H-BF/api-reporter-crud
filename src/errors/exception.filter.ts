@@ -8,7 +8,7 @@ export class ExceptionFilter implements IExceptionFilter {
     catch(error: Error, req: Request, res: Response, next: NextFunction): void {
 
         if (error instanceof HTTPError) {
-            logger.err(`[${req.hostname}][${req.ip}][${error.code}] - ${error.message}`)
+            logger.err(`[${req.headers.host}][${req.headers.referer}][${error.code}] - ${error.message}`)
             res.status(error.code).send(JSON.parse(error.message))
         }
     };
