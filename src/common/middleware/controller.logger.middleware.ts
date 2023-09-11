@@ -6,7 +6,7 @@ class ControllerMethodLogger implements IMiddleware {
     
     async execute({ url, method, body, headers }: Request, res: Response, next: NextFunction): Promise<void> {
 
-        let msg = `[${headers.host}][${headers.referer}][${method}] ${url} `     
+        let msg = `[ref: ${headers.referer}][${method}] ${url} `     
         switch(method) {
             case 'GET':
                 break;
