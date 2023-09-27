@@ -1,7 +1,7 @@
 vault:
   enabled: true
   env:
-    - services/testops/prd/swarm-pgsql-cl1-dev/user_admin:
+    - services/testops/prd/swarm-pgsql-cl1/user_admin:
         DB_PASSWORD: password
 
   entrypoint: "sh /app/entrypoint.sh"
