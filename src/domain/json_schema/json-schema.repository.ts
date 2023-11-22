@@ -2,11 +2,13 @@ import { IJsonSchemaRepository } from "./interfaces/json-schema.repository.inter
 import { PrismaService } from "../../database/prisma.service";
 import { JsonSchema as PJsonSchema} from "@prisma/client"
 import { JsonSchema } from "./json-schema.entity";
+import { retry } from "../../common/decorator/repository.retry.decorator";
 
 export class JsonSchemaRepository implements IJsonSchemaRepository {
 
     constructor(private prismaService: PrismaService) { }
 
+    @retry()
     async create(jsonSchema: JsonSchema): Promise<PJsonSchema> {
        return await this.prismaService.client.jsonSchema.create({
         data: {

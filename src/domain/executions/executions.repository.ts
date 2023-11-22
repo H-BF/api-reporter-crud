@@ -2,11 +2,13 @@ import { Executions as PExecutions, PrismaClient } from "@prisma/client";
 import { Executions } from "./executions.entity";
 import { IExecutionsRepository } from "./interfaces/executions.repository.interface";
 import { PrismaService } from "../../database/prisma.service";
+import { retry } from "../../common/decorator/repository.retry.decorator";
 
 export class ExecutionsRepository implements IExecutionsRepository {
 
     constructor(private prismaService: PrismaService) { }
 
+    @retry()
     async create(execution: Executions): Promise<PExecutions> {
         const data = this.transform(execution)
         return await this.prismaService.client.executions.create({
@@ -14,6 +16,7 @@ export class ExecutionsRepository implements IExecutionsRepository {
         })
     }
 
+    @retry()
     async update(uuid: string, execution: Executions): Promise<PExecutions> {
         const data = this.transform(execution)
         return await this.prismaService.client.executions.update({
