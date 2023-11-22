@@ -1,7 +1,7 @@
 vault:
   enabled: true
   env:
-    - services/testops/prd/swarm-pgsql-cl1-dev/user_admin:
+    - services/testops/prd/testops-pgsql-cl1/user_admin:
         DB_PASSWORD: password
 
   entrypoint: "sh /app/entrypoint.sh"
@@ -9,8 +9,8 @@ vault:
 env:
   LOG_LVL: "DEBUG"
   LOG_TYPE: "pretty"
-  STAGE: dev
-  TRUSTED_ADDRESS: http://frontops-ingress-controller.frontops.svc.k8s.dldevel
+  STAGE: prod
+  TRUSTED_ADDRESS: http://frontops-ingress-controller.frontops.svc.k8s.prod-dl
   DB_NAME: testops
  
 config:
