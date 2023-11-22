@@ -2,11 +2,13 @@ import { LaunchError as PLaunchError } from "@prisma/client";
 import { PrismaService } from "../../database/prisma.service";
 import { ILaunchErrorRepository } from "./interfaces/launch-error.repository.interface";
 import { ILaunchError } from "./launch-error.entity";
+import { retry } from "../../common/decorator/repository.retry.decorator";
 
 export class LaunchErrorRepository implements ILaunchErrorRepository {
 
     constructor(private prismaService: PrismaService) { }
 
+    @retry()
     async create(launchError: ILaunchError): Promise<PLaunchError> {
         return await this.prismaService.client.launchError.create({
             data: {

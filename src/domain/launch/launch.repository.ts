@@ -2,11 +2,13 @@ import { ILaunchRepository } from "./interfaces/launch.repository.interface";
 import { Launch } from "./launch.entity";
 import { Launch as PLaunch } from "@prisma/client"
 import { PrismaService } from '../../database/prisma.service';
+import { retry } from "../../common/decorator/repository.retry.decorator";
 
 export class LaunchRepository implements ILaunchRepository {
 
     constructor(private prismaService: PrismaService) { }
 
+    @retry()
     async create(launch: Launch): Promise<PLaunch> {
         return await this.prismaService.client.launch.create({
             data: {
@@ -25,6 +27,7 @@ export class LaunchRepository implements ILaunchRepository {
         })
     }
 
+    @retry()
     async updateByUuid(uuid: string, launch: Launch): Promise<PLaunch> {
         let data: any = this.transform(launch)
         return await this.prismaService.client.launch.update({
