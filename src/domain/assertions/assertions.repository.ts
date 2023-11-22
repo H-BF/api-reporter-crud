@@ -2,11 +2,13 @@ import { Assertions as PAssertions, PrismaClient } from "@prisma/client";
 import { IAssertionsRepository } from "./interfaces/assertions.repository.interface";
 import { Assertions } from "./assertions.entity";
 import { PrismaService } from "../../database/prisma.service";
+import { retry } from "../../common/decorator/repository.retry.decorator";
 
 export class AssertionsRepository implements IAssertionsRepository {
 
     constructor(private prismaService: PrismaService) {}
 
+    @retry()
     async create(assertions: Assertions): Promise<PAssertions> {
         return await this.prismaService.client.assertions.create({
             data: {
@@ -19,6 +21,7 @@ export class AssertionsRepository implements IAssertionsRepository {
         })
     }
 
+    @retry()
     async createMany(assertions: Assertions[]): Promise<number> {
         const data: any[] = []
 
