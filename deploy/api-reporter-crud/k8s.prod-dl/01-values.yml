@@ -19,12 +19,12 @@ config:
     entrypoint.sh:
       data: |-
         #!/bin/bash
-        DB_URL=testops-pgsql-cl1-haproxy.testops.svc.k8s.prod-dl:5005
+        DB_URL=testops-pgsql-cl1-haproxy.testops.svc.k8s.prod-dl:5000
         DB_USER=$DB_USER
         DB_PASSWORD=$DB_PASSWORD
         DB_URL=$DB_URL
         DB_NAME=$DB_NAME
 
-        DATABASE_URL="postgres://${DB_USER}:${DB_PASSWORD}@${DB_URL}/${DB_NAME}?schema=api_report"
+        DATABASE_URL="postgres://${DB_USER}:${DB_PASSWORD}@${DB_URL}/${DB_NAME}?schema=api_report&application_name=api-report-crud"
         export DATABASE_URL=$DATABASE_URL
         exec node index.js
