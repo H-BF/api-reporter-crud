@@ -38,9 +38,11 @@ export class AssertionsRepository implements IAssertionsRepository {
         const { count } = await this.prismaService.client.assertions.createMany({
             data: data
         })
+        this.prismaService.disconnect()
         return count
     }
 
+    @retry()
     async getOneByUuid(uuid: string): Promise<PAssertions | null> {
         return await this.prismaService.client.assertions.findFirst({
             where: {
@@ -49,6 +51,7 @@ export class AssertionsRepository implements IAssertionsRepository {
         })
     }
 
+    @retry()
     async getAllByExecutionUuid(executionUuid: string): Promise<PAssertions[] | null> {
         return await this.prismaService.client.assertions.findMany({
             where: {
