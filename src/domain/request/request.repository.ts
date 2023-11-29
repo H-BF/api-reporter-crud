@@ -20,6 +20,7 @@ export class RequestRepository implements IRequestRepository {
         })
     }
 
+    @retry()
     async getByUuid(uuid: string): Promise<PRequest | null> {
         return await this.prismaService.client.request.findFirst({
             where: {
