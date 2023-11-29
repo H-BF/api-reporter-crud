@@ -19,6 +19,7 @@ export class JsonSchemaRepository implements IJsonSchemaRepository {
        })
     }
 
+    @retry()
     async getOneByUuid(uuid: string): Promise<PJsonSchema | null> {
         return await this.prismaService.client.jsonSchema.findFirst({
             where: {
@@ -27,6 +28,7 @@ export class JsonSchemaRepository implements IJsonSchemaRepository {
         })
     }
 
+    @retry()
     async getAllByLaunchUuid(launchUuid: string): Promise<PJsonSchema[] | null> {
         return await this.prismaService.client.jsonSchema.findMany({
             where: {

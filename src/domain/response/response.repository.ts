@@ -21,6 +21,7 @@ export class ResponseRepository implements IResponseRepository {
         })
     }
     
+    @retry()
     async getByUuid(uuid: string): Promise<PResponse | null> {
         return await this.prismaService.client.response.findFirst({
             where: {

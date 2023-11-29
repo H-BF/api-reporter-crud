@@ -27,6 +27,7 @@ export class ExecutionsRepository implements IExecutionsRepository {
         })
     }
 
+    @retry()
     async getOneByUuid(uuid: string): Promise<PExecutions | null> {
         return await this.prismaService.client.executions.findFirst({
             where: {
@@ -35,6 +36,7 @@ export class ExecutionsRepository implements IExecutionsRepository {
         })
     }
 
+    @retry()
     async getAllByLaunchUuid(
         launchUuid: string,
         offset?: number,
@@ -49,6 +51,7 @@ export class ExecutionsRepository implements IExecutionsRepository {
         })
     }
 
+    @retry()
     async countAllRowsWhere(launchUuid: string): Promise<number> {
         return this.prismaService.client.executions.count({
             where: {
