@@ -18,5 +18,8 @@ export class LaunchCreateDto {
     commit!: string
 
     @IsString()
-    hbfTag!: string
+    tag!: string
+
+    @IsString()
+    serviceName!: string
 }

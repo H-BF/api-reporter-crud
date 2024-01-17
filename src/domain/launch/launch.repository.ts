@@ -20,8 +20,9 @@ export class LaunchRepository implements ILaunchRepository {
                 fail_count: launch.failCount,
                 pass_count: launch.passCount,
                 duration: launch.duration,
-                hbf_tag: launch.hbfTag!,
+                tag: launch.tag!,
                 status: launch.status,
+                service_name: launch.serviceName!
 
             }
         })
@@ -73,6 +74,16 @@ export class LaunchRepository implements ILaunchRepository {
         })
     }
 
+    @retry()
+    async selectDistinctServiceName() {
+        return await this.prismaService.client.launch.findMany({
+            select: {
+                service_name: true
+            },
+            distinct: ['service_name']
+        })
+    }
+
     private transform(launch: Launch): any {
         let result: any = {}
         if (launch.pipeline) { result.pipeline = Number(launch.pipeline) }
@@ -83,8 +94,9 @@ export class LaunchRepository implements ILaunchRepository {
         if (launch.failCount) { result.fail_count = launch.failCount }
         if (launch.passCount) { result.pass_count = launch.passCount }
         if (launch.duration) { result.duration = launch.duration }
-        if (launch.hbfTag) { result.hbf_tag = launch.hbfTag }
+        if (launch.tag) { result.hbf_tag = launch.tag }
         if (launch.status) { result.status = launch.status }
+        if (launch.serviceName) { result.service_name = launch.serviceName }
         return result
     }
 } 

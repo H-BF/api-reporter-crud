@@ -9,8 +9,9 @@ export interface ILaunch {
     failCount?: number
     passCount?: number
     duration?: number
-    hbfTag?: string
+    tag?: string
     status?: LaunchStatus
+    serviceName?: string
 }
 
 export class Launch {
@@ -23,8 +24,9 @@ export class Launch {
     private _failCount?: number
     private _passCount?: number
     private _duration?: number
-    private _hbfTag?: string
+    private _tag?: string
     private _status?: LaunchStatus
+    private _serviceName?: string
 
     constructor(data: ILaunch) {
         this._pipeline = data.pipeline
@@ -35,8 +37,9 @@ export class Launch {
         this._failCount = data.failCount
         this._passCount = data.passCount
         this._duration = data.duration
-        this._hbfTag = data.hbfTag
+        this._tag = data.tag
         this._status = data.status
+        this._serviceName = data.serviceName
     }
 
     public get pipeline(): string | undefined {
@@ -103,13 +106,12 @@ export class Launch {
         this._duration = value
     }
 
-
-    public get hbfTag(): string | undefined {
-        return this._hbfTag
+    public get tag(): string | undefined {
+        return this._tag
     }
 
-    public set hbfTag(image: string) {
-        this._hbfTag = image
+    public set tag(image: string) {
+        this._tag = image
     }
 
 
@@ -119,5 +121,13 @@ export class Launch {
 
     public set status(value: LaunchStatus) {
         this._status = value
+    }
+
+    public get serviceName(): string | undefined {
+        return this._serviceName
+    }
+
+    public set serviceName(value: LaunchStatus) {
+        this._serviceName = value
     }
 } 

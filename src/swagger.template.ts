@@ -471,7 +471,7 @@ export const swaggerTemplate = parse({
           },
           {
             "in": "query",
-            "name": "hbfTag",
+            "name": "tag",
             "required": false,
             "schema": {
               "type": "string"
@@ -552,6 +552,45 @@ export const swaggerTemplate = parse({
           }
         }
       }
+    },
+    "/launchs/unique_service": {
+      "get": {
+        "summary": "Получения списка уникальных названий сервисов",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serviceName"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Не корректный запрос",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Серверная ошибка",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+
     },
     "/json_schema": {
       "get": {
@@ -777,7 +816,7 @@ export const swaggerTemplate = parse({
           "duration": {
             "type": "number"
           },
-          "hbf_tag": {
+          "tag": {
             "type": "string"
           },
           "status": {
@@ -788,6 +827,17 @@ export const swaggerTemplate = parse({
               "finish",
               "error"
             ]
+          }
+        }
+      },
+      "serviceName": {
+        "type": "object",
+        "properties": {
+          "service_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

@@ -19,8 +19,9 @@ CREATE TABLE "launch" (
     "fail_count" INTEGER,
     "pass_count" INTEGER,
     "duration" INTEGER,
-    "hbf_tag" TEXT NOT NULL,
+    "tag" TEXT NOT NULL,
     "status" "launch_status" NOT NULL DEFAULT 'create',
+    "service_name" TEXT NOT NULL,
 
     CONSTRAINT "launch_pkey" PRIMARY KEY ("uuid")
 );
@@ -92,7 +93,7 @@ CREATE TABLE "json_schema" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "launch_pipeline_job_key" ON "launch"("pipeline", "job");
+CREATE UNIQUE INDEX "launch_pipeline_job_service_name_key" ON "launch"("pipeline", "job", "service_name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "launch_error_launch_uuid_key" ON "launch_error"("launch_uuid");

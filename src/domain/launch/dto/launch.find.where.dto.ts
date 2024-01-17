@@ -25,7 +25,7 @@ export class LaunchFindWhereDto {
 
     @IsOptional()
     @IsString()
-    hbfTag?: string
+    tag?: string
 
     @IsNumberString()
     @IsOptional()
@@ -38,4 +38,8 @@ export class LaunchFindWhereDto {
     @IsOptional()
     @IsIn(Object.keys(LaunchStatus))
     status?: LaunchStatus
+
+    @IsString()
+    @IsOptional()
+    serviceName?: string
 }

@@ -18,13 +18,14 @@ model Launch {
     fail_count  Int?
     pass_count  Int?
     duration    Int?
-    hbf_tag     String
+    tag     String
     status      LaunchStatus @default(create)
+    service_name String
     LaunchError LaunchError?
     Executions  Executions[]
     JsonSchema  JsonSchema[]
 
-    @@unique([pipeline, job])
+    @@unique([pipeline, job, service_name])
     @@map(name: "launch")
 }
 
