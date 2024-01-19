@@ -14,7 +14,6 @@ CREATE TABLE "launch" (
     "pipeline" INTEGER NOT NULL,
     "job" INTEGER NOT NULL,
     "src_branch" TEXT NOT NULL,
-    "dst_branch" TEXT NOT NULL,
     "commit" TEXT NOT NULL,
     "fail_count" INTEGER,
     "pass_count" INTEGER,

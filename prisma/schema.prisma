@@ -8,22 +8,21 @@ datasource db {
 }
 
 model Launch {
-    uuid        String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-    date        DateTime     @default(now())
-    pipeline    Int
-    job         Int
-    src_branch  String
-    dst_branch  String
-    commit      String
-    fail_count  Int?
-    pass_count  Int?
-    duration    Int?
-    tag     String
-    status      LaunchStatus @default(create)
+    uuid         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    date         DateTime     @default(now())
+    pipeline     Int
+    job          Int
+    src_branch   String
+    commit       String
+    fail_count   Int?
+    pass_count   Int?
+    duration     Int?
+    tag          String
+    status       LaunchStatus @default(create)
     service_name String
-    LaunchError LaunchError?
-    Executions  Executions[]
-    JsonSchema  JsonSchema[]
+    LaunchError  LaunchError?
+    Executions   Executions[]
+    JsonSchema   JsonSchema[]
 
     @@unique([pipeline, job, service_name])
     @@map(name: "launch")
@@ -69,21 +68,21 @@ model Executions {
     launch        Launch       @relation(fields: [launch_uuid], references: [uuid])
     request       Request      @relation(fields: [request_uuid], references: [uuid])
     response      Response     @relation(fields: [response_uuid], references: [uuid])
-    fail_count  Int?
-    pass_count  Int?
+    fail_count    Int?
+    pass_count    Int?
     Assertions    Assertions[]
 
     @@map(name: "executions")
 }
 
 model Assertions {
-    uuid           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+    uuid           String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
     name           String
-    execution_uuid String     @db.Uuid
-    json_schema    String?    @db.Uuid
+    execution_uuid String      @db.Uuid
+    json_schema    String?     @db.Uuid
     error_message  String?
     status         TestStatus
-    execution      Executions @relation(fields: [execution_uuid], references: [uuid])
+    execution      Executions  @relation(fields: [execution_uuid], references: [uuid])
     schema         JsonSchema? @relation(fields: [json_schema], references: [uuid])
 
     @@map(name: "assertions")

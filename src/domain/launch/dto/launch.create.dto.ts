@@ -12,9 +12,6 @@ export class LaunchCreateDto {
     srcBranch!: string
 
     @IsString()
-    dstBranch!: string
-
-    @IsString()
     commit!: string
 
     @IsString()

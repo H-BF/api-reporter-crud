@@ -4,7 +4,6 @@ export interface ILaunch {
     pipeline?: string
     job?: string
     srcBranch?: string
-    dstBranch?: string
     commit?: string
     failCount?: number
     passCount?: number
@@ -19,7 +18,6 @@ export class Launch {
     private _pipeline?: string
     private _job?: string
     private _srcBranch?: string
-    private _dstBranch?: string
     private _commit?: string | undefined
     private _failCount?: number
     private _passCount?: number
@@ -32,7 +30,6 @@ export class Launch {
         this._pipeline = data.pipeline
         this._job = data.job
         this._srcBranch = data.srcBranch
-        this._dstBranch = data.dstBranch
         this._commit = data.commit
         this._failCount = data.failCount
         this._passCount = data.passCount
@@ -64,14 +61,6 @@ export class Launch {
 
     public set srcBranch(srcBranch: string) {
         this._srcBranch = srcBranch
-    }
-
-    public get dstBranch(): string | undefined {
-        return this._dstBranch
-    }
-
-    public set dstBranch(dstBranch: string) {
-        this._dstBranch = dstBranch
     }
 
     public get commit(): string | undefined {
@@ -127,7 +116,7 @@ export class Launch {
         return this._serviceName
     }
 
-    public set serviceName(value: LaunchStatus) {
+    public set serviceName(value: string) {
         this._serviceName = value
     }
 } 

@@ -17,10 +17,6 @@ export class LaunchFindWhereDto {
 
     @IsOptional()
     @IsString()
-    dstBranch?: string
-
-    @IsOptional()
-    @IsString()
     commit?: string
 
     @IsOptional()

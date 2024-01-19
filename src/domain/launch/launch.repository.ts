@@ -15,7 +15,6 @@ export class LaunchRepository implements ILaunchRepository {
                 pipeline: Number(launch.pipeline),
                 job: Number(launch.job),
                 src_branch: launch.srcBranch!,
-                dst_branch: launch.dstBranch!,
                 commit: launch.commit!,
                 fail_count: launch.failCount,
                 pass_count: launch.passCount,
@@ -89,7 +88,6 @@ export class LaunchRepository implements ILaunchRepository {
         if (launch.pipeline) { result.pipeline = Number(launch.pipeline) }
         if (launch.job) { result.job = Number(launch.job) }
         if (launch.srcBranch) { result.src_branch = launch.srcBranch }
-        if (launch.dstBranch) { result.dst_branch = launch.dstBranch }
         if (launch.commit) { result.commit = launch.commit }
         if (launch.failCount) { result.fail_count = launch.failCount }
         if (launch.passCount) { result.pass_count = launch.passCount }
