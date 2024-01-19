@@ -17,15 +17,11 @@ export class LaunchFindWhereDto {
 
     @IsOptional()
     @IsString()
-    dstBranch?: string
-
-    @IsOptional()
-    @IsString()
     commit?: string
 
     @IsOptional()
     @IsString()
-    hbfTag?: string
+    tag?: string
 
     @IsNumberString()
     @IsOptional()
@@ -38,4 +34,8 @@ export class LaunchFindWhereDto {
     @IsOptional()
     @IsIn(Object.keys(LaunchStatus))
     status?: LaunchStatus
+
+    @IsString()
+    @IsOptional()
+    serviceName?: string
 }
