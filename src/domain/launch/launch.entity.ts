@@ -4,13 +4,13 @@ export interface ILaunch {
     pipeline?: string
     job?: string
     srcBranch?: string
-    dstBranch?: string
     commit?: string
     failCount?: number
     passCount?: number
     duration?: number
-    hbfTag?: string
+    tag?: string
     status?: LaunchStatus
+    serviceName?: string
 }
 
 export class Launch {
@@ -18,25 +18,25 @@ export class Launch {
     private _pipeline?: string
     private _job?: string
     private _srcBranch?: string
-    private _dstBranch?: string
     private _commit?: string | undefined
     private _failCount?: number
     private _passCount?: number
     private _duration?: number
-    private _hbfTag?: string
+    private _tag?: string
     private _status?: LaunchStatus
+    private _serviceName?: string
 
     constructor(data: ILaunch) {
         this._pipeline = data.pipeline
         this._job = data.job
         this._srcBranch = data.srcBranch
-        this._dstBranch = data.dstBranch
         this._commit = data.commit
         this._failCount = data.failCount
         this._passCount = data.passCount
         this._duration = data.duration
-        this._hbfTag = data.hbfTag
+        this._tag = data.tag
         this._status = data.status
+        this._serviceName = data.serviceName
     }
 
     public get pipeline(): string | undefined {
@@ -61,14 +61,6 @@ export class Launch {
 
     public set srcBranch(srcBranch: string) {
         this._srcBranch = srcBranch
-    }
-
-    public get dstBranch(): string | undefined {
-        return this._dstBranch
-    }
-
-    public set dstBranch(dstBranch: string) {
-        this._dstBranch = dstBranch
     }
 
     public get commit(): string | undefined {
@@ -103,13 +95,12 @@ export class Launch {
         this._duration = value
     }
 
-
-    public get hbfTag(): string | undefined {
-        return this._hbfTag
+    public get tag(): string | undefined {
+        return this._tag
     }
 
-    public set hbfTag(image: string) {
-        this._hbfTag = image
+    public set tag(image: string) {
+        this._tag = image
     }
 
 
@@ -119,5 +110,13 @@ export class Launch {
 
     public set status(value: LaunchStatus) {
         this._status = value
+    }
+
+    public get serviceName(): string | undefined {
+        return this._serviceName
+    }
+
+    public set serviceName(value: string) {
+        this._serviceName = value
     }
 } 

@@ -9,6 +9,7 @@ import { LaunchUpdateDto } from "./dto/launch.update.dto";
 import { LaunchService } from "./launch.service";
 import { tryCatch } from "../../common/decorator/controller.try-catch.decorator";
 import { LaunchFindWhereDto } from "./dto/launch.find.where.dto";
+import { EmptyDto } from "./dto/empty.dto";
 
 export class LaunchController extends BaseController {
 
@@ -39,6 +40,12 @@ export class LaunchController extends BaseController {
                 method: 'get',
                 func: this.getWhere,
                 middlewares: [controllerMethodLogger, new GetValidateMiddleware(LaunchFindWhereDto)]
+            },
+            {
+                path: '/launchs/unique_service',
+                method: 'get',
+                func: this.getUniqueServiceName,
+                middlewares: [controllerMethodLogger, new GetValidateMiddleware(EmptyDto)]
             }
         ])
     }
@@ -66,5 +73,10 @@ export class LaunchController extends BaseController {
         const uuid = req.query['uuid']!!.toString()
         const launch = await this.launchServise.getLaunchByUuid(uuid)
         res.status(200).send(launch)
+    }
+
+    async getUniqueServiceName(req: Request, res: Response, next: NextFunction) {
+        const serviceName = await this.launchServise.getUniqueServiceName()
+        res.status(200).send(serviceName)
     }
 }

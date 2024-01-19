@@ -35,4 +35,9 @@ export class LaunchService implements ILaunchService {
             launchs: launchs || []
         }
     }
+
+    async getUniqueServiceName() {
+        const serviceNames = await this.client.selectDistinctServiceName()
+        return { service_names: serviceNames.map(item => item.service_name) }
+    }
 }
