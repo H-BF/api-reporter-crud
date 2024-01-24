@@ -27,7 +27,7 @@ ingressPort: 9001
 ingressPath: api
 apiVersion: v1
 
-trustedAddress: http://frontops-ingress-controller.frontops.svc.k8s.dldevel
+trustedAddress: http://frontops-ingress-controller.frontops.svc.k8s.dldevel;http://127.0.0.1:9999
 
 defaults:
   securityContext: {}
