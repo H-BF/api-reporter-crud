@@ -111,6 +111,11 @@ enum LaunchStatus {
 enum Method {
     GET
     POST
+    PUT
+    PATCH
+    DELETE
+    HEAD
+    OPTIONS
 
     @@map(name: "method")
 }
